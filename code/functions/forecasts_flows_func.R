@@ -37,7 +37,7 @@ forecasts_flows_func <- function(date_sim00,
   #
   flows.past9 <- tail(flows.ts.df, 9) # from 9 days past to yesterday
   jrr_outflow_lagged_today <- flows.past9$jrr_outflow[1] # Jrr release nine days ago
-  print(paste(date_sim00, yesterday_date, jrr_outflow_lagged_today))
+  # print(paste(date_sim00, yesterday_date, jrr_outflow_lagged_today))
   #  sen_outflow_yesterday <- flows.past9$sen_outflow[9] # sen release yesterday
   #
   # Grab today's flows from potomac.data.df - a placeholder for flow data sources
@@ -55,8 +55,7 @@ forecasts_flows_func <- function(date_sim00,
                   jrr_outflow = jrr_outflow_today, # a func input
                   jrr_outflow_lagged = jrr_outflow_lagged_today,
                   lfalls_nat = lfalls_nat*1.0, # somehow int - need num
-                  lfalls_adj = lfalls_nat +
-                    jrr_outflow_lagged,
+                  lfalls_adj = lfalls_nat + jrr_outflow_lagged,
                   #----------------------------------------------------------------
                   # The 0-day fc happens here
                   # ie what's where we need it to be today
@@ -73,7 +72,7 @@ forecasts_flows_func <- function(date_sim00,
                   lfalls_nat_fc9 = if_else(lfalls_nat_fc9 <= lfalls_nat,
                                            lfalls_nat_fc9, lfalls_nat*1.0),
                   lfalls_obs_fc9 = lfalls_nat_fc9 +
-                    jrr_outflow +
+                    jrr_outflow + sen_flowby -
                     withdr_pot
     ) %>% # end of mutate
     #------------------------------------------------------------------------------

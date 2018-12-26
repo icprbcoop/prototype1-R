@@ -40,8 +40,6 @@ simulation_func <- function(date_sim0,
   #-----------------------------------------------------------------------------
   # 0. The demand forecasts (fcs)
   #-----------------------------------------------------------------------------
-  #  - right now just use values from input demand time series
-  #  - eventually, would use CO-OP demand models
   #
   # Find out demand restriction status
   # First compute upstr storage as fraction of capacity
@@ -71,7 +69,9 @@ simulation_func <- function(date_sim0,
   #             d_reduction_wma0, d_reduction_wma))
   #
   # Next get the demand forecasts
-  demands.fc.df <- forecasts_demands_func(date_sim0,
+  #  - right now just use values from input demand time series
+  #  - eventually, would use CO-OP demand models
+    demands.fc.df <- forecasts_demands_func(date_sim0,
                                           d_reduction_wma,
                                           demands.daily.df)
   # This time series df has a length = 15, from today to 14 days hence

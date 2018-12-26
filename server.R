@@ -17,7 +17,7 @@ shinyServer(function(input, output, session) {
               jrr = jrr.ts.df0, 
               flows = potomac.ts.df0)
   ts <- sim_main_func(date_today0,
-                      mos_0day,
+                      mos_0day0,
                       mos_1day, 
                       mos_9day, 
                       ts0) 
@@ -34,11 +34,9 @@ shinyServer(function(input, output, session) {
   #   - say, if end date (aka DREXtoday) changes
   observeEvent(input$run_main, {
     ts <- sim_main_func(input$DREXtoday,
-                        input$dr_va,
-                        input$dr_md_cent,
-                        input$dr_md_west, 
-                        input$mos_1day,
-                        input$dr_wma_override,
+                        input$mos_0day,
+                        mos_1day,
+                        mos_9day,
                         ts)
   })
   #
@@ -88,13 +86,14 @@ shinyServer(function(input, output, session) {
       
       theme(axis.title.x = element_blank())
   }) # end renderPlot for output$potomacFlows
+  #
   #------------------------------------------------------------------
   # Create graph of storage and releases for each reservoir
   #------------------------------------------------------------------
   output$jrrStorageReleases <- renderPlot({
     graph_title <- "Jennings Randolph"
     jrr.graph <- ts$jrr %>%
-      mutate(storage = stor, outflow = rel) %>%
+#      mutate(storage = stor, outflow = rel) %>%
       select(Date = date_time,
              storage, 
              outflow
@@ -122,7 +121,7 @@ shinyServer(function(input, output, session) {
     sen.graph <- ts$sen
     graph_title <- "Little Seneca"
     res.graph <- sen.graph %>%
-      mutate(storage = stor, outflow = rel) %>%
+#      mutate(storage = stor, outflow = rel) %>%
       select(date_time, storage, outflow) %>%
       gather(key = "Legend",
              value = "MG", -date_time) %>%
@@ -164,6 +163,38 @@ shinyServer(function(input, output, session) {
         "green" else "orange"
     )
   }) # end renderValueBox
-
+  #
+  #------------------------------------------------------------------
+  # Allow the user to write simulation output time series to files
+  #------------------------------------------------------------------
+  observeEvent(input$write_ts, {
+    write.csv(ts$flows, paste(ts_output, "output_flows.csv"))
+    write.csv(ts$sen, paste(ts_output, "output_sen.csv"))
+    write.csv(ts$jrr, paste(ts_output, "output_jrr.csv"))
+  })
+  #
+  #------------------------------------------------------------------
+  # Temporary output for QAing purposes
+  #------------------------------------------------------------------
+  output$QA_out <- renderValueBox({
+    potomac.df <- ts$flows
+    sen.df <- ts$sen
+    jrr.df <- ts$jrr
+    QA_out <- paste("Min flow at LFalls = ",
+                    round(min(potomac.df$lfalls_obs, na.rm = TRUE)),
+                    " mgd",
+                    "________ Min sen, jrr stor = ",
+                    round(min(sen.df$storage, na.rm = TRUE)),
+                    " mg, ",
+                    round(min(jrr.df$storage, na.rm = TRUE)),
+                    " mg")
+    valueBox(
+      value = tags$p(QA_out, style = "font-size: 60%;"),
+      subtitle = NULL,
+      color = "blue"
+    )
+  })
+  #------------------------------------------------------------------
+  
   }) # end shinyServer function
 

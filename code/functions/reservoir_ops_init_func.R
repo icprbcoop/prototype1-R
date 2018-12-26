@@ -32,18 +32,22 @@ reservoir_ops_init_func <- function(res, withdr_req, ws_rel_req){
   res0.df <- res@inflows[1,] %>%
     dplyr::mutate(stor = res@stor0, 
                   w = withdr_req,
+                  rel_req = ws_rel_req,
                   inflow = inflows) %>%
     dplyr::mutate(available = stor + inflow - w,
                   # rel_min = case_when(flowby > rel_req ~ flowby,
                   #                     flowby <= rel_req ~ rel_req),
-                  rel = case_when(
+                  outflow = case_when(
                     cap - available <= -rel_min ~ available - cap, # spill
                     cap - available > rel_min & available > rel_min ~ rel_min,
                     cap - available > rel_min & available <= rel_min ~ available),
-                  w = case_when(stor + inflow >= w ~ w,
-                                stor + inflow < w ~ stor + inflow)
+                  withdr_req = w,
+                  withdr = case_when(stor + inflow >= w ~ w,
+                                stor + inflow < w ~ stor + inflow),
+                  storage = stor
       
     ) %>%
-    dplyr::select(date_time, stor, inflow = inflows, rel, w, available)
+    dplyr::select(date_time, storage, inflow = inflows, withdr,
+                  outflow, withdr_req, rel_req, available)
   return(res0.df)
 }

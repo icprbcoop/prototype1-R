@@ -20,13 +20,6 @@ date_today <- as.Date("1930-02-01")
                       ts0)
   #
   flows.ts.df <- ts$flows
-  # date_last <- flows.ts.df$date_time
-  # print(paste("After initial main run, the last date is ", date_last))
-  # Now rerun, just as in the Shiny model
-  # ts <- sim_main_func(date_today, ts)
-  # flows.ts.df <- ts$flows
-  # date_last <- flows.ts.df$date_time
-  # print(paste("After second main run, the last date is ", date_last))
   #   #
   # Now write some output
   write.csv(ts$flows, paste(ts_output, "offline_flows.csv"))

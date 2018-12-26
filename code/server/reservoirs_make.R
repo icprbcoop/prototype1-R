@@ -20,19 +20,19 @@ inflows.df <- flows.daily.mgd.df %>%
 # Load the basic reservoir data and inflow time series
 #------------------------------------------------------------------
 # Later want to read this from /input/parameters/*.R
-sen_cap <- 4000
-sen_stor0 <- 3000
-sen_flowby <- 3
-sen_withdr_req <- 10
-sen_ws_rel_req <- 3
+sen_cap <- 3900.0
+sen_stor0 <- 3900.0
+sen_flowby <- 1.12
+sen_withdr_req <- 0.0
+sen_ws_rel_req <- 0.0
 sen.inflows.df <- inflows.df %>%
   select(date_time, inflows = sen_in)
 #
-jrr_cap <- 16000
-jrr_stor0 <- 15000
-jrr_flowby <- 120
-jrr_withdr_req <- 120
-jrr_ws_rel_req <- 300
+jrr_cap <- 35400.0 # nbr = jrr wq + jrr ws + savage
+jrr_stor0 <- 35400.0
+jrr_flowby <- 113.0 # nbr = (120 + 55) cfs = 113 mgd
+jrr_withdr_req <- 0.0
+jrr_ws_rel_req <- 0.0
 jrr.inflows.df <- inflows.df %>%
   select(date_time, inflows = jrr_in)
 #

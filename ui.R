@@ -6,16 +6,16 @@
 dashboardPage(skin = "blue",
   dashboardHeader(title = "Prototype1"),
   dashboardSidebar(
-    width = 200,
+    width = 250,
 #    sidebarLayout(
 #      sidebarPanel(
 dateRangeInput("plot_range",
                "Specify plot range",
-               start = date_start,
+               start = date_plot_start,
                # start = "1929-10-01",
                #               end = "1930-12-31",
                # start = date_start,
-               end = date_end,
+               end = date_plot_end,
                format = "yyyy-mm-dd",
                width = NULL),
 dateInput("DREXtoday",
@@ -23,8 +23,26 @@ dateInput("DREXtoday",
           value = date_today0 ,
           min = "1929-10-02",
           max = "1931-12-31",
-          format = "yyyy-mm-dd")
-      ),
+          format = "yyyy-mm-dd",
+          width = "200px"),
+
+actionButton("run_main",
+             "Re-run simulation",
+             icon = NULL,
+             width = "220px"),
+br(), 
+numericInput("mos_0day",
+             "0 day margin of safety (MGD)",
+             value = mos_0day0,
+             min = 0,
+             max = 220,
+             width = NULL),
+br(), br(),
+actionButton("write_ts",
+             "Write output time series",
+             icon = NULL,
+             width = NULL)
+),
   dashboardBody(
     fluidRow(
       column(
@@ -57,7 +75,10 @@ dateInput("DREXtoday",
           title = "Storage triggers",
           width = 2,
           "voluntary, mandatory")
-) # end fluidRow with reservoir storage
+), # end fluidRow with reservoir storage
+fluidRow( # Temporary row to display some output for QAing
+  valueBoxOutput("QA_out", width = NULL) 
+) # end fluidRow for QAing purposes
 ) # end dashboardBody
 ) # end dashboardPage
 

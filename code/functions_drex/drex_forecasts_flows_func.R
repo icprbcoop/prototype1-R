@@ -121,7 +121,7 @@ forecasts_flows_func <- function(date_sim00, qavald, qavaln,
                   # The 0-day fc happens here
                   # ie what's where we need it to be today
                   #
-                  lfalls_obs = lfalls_nat + sen_watershed +
+                  lfalls_obs_fc = lfalls_nat + sen_watershed +
                     jrr_outflow_lagged + savage_outflow_lagged +
                     sen_outflow_lagged -
                     withdr_pot_wa - withdr_pot_wssc - 

@@ -20,13 +20,18 @@ source("code/global/import_data.R", local = TRUE)
 # Block temporarily pasted into global.R - for ease of debugging
 #-----------------------------------------------------------------
 # Define the simulation period - later do this reactively:
-date_start <- as.Date("1930-01-01")
-date_end <- as.Date("1930-05-31")
-date_today0 <- as.Date("1930-03-15")
+date_start <- as.Date("1929-10-01")
+date_end <- as.Date("1932-12-15")
+date_today0 <- as.Date("1931-10-31")
+date_plot_start <- as.Date("1930-01-01")
+date_plot_end <- as.Date("1931-12-31")
+
 #
-mos_0day <- 0.0
+mos_0day0 <- 50.0
 mos_1day <- 0.0
 mos_9day <- 0.0
+lfalls_flowby <- 100.0
+jrr_sen_balance <- 0.0
 #
 source("code/classes/reservoir_class.R", local = TRUE)
 source("code/functions/reservoir_ops_init_func.R", local = TRUE)
@@ -35,6 +40,7 @@ source("code/functions/forecasts_demands_func.R", local = TRUE)
 source("code/functions/forecasts_flows_func.R", local = TRUE)
 source("code/functions/sim_main_func.R", local = TRUE)
 source("code/functions/simulation_func.R", local = TRUE)
+source("code/functions/estimate_need_func.R", local = TRUE)
 source("code/server/potomac_flows_init.R", local = TRUE)
 source("code/server/reservoirs_make.R", local = TRUE) 
 # source("code/server/potomac_flows.R", local = TRUE)

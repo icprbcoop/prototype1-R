@@ -20,7 +20,7 @@ shinyServer(function(input, output, session) {
                       dr_va0, # VA upstream demand reduction
                       dr_md_cent0, # MD-Central upstream demand reduction
                       dr_md_west0, # MD-Western upstream demand reduction
-                      mos_1day0, # COOP 1-day margin of safety
+                      mos_0day0, # COOP 0-day margin of safety
                       dr_wma_override0, # WMA demand reduction override
                       ts0) 
   #
